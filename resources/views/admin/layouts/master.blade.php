@@ -31,7 +31,9 @@
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/template/admin') }}/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="{{ asset('assets/template/admin/vendor/datatables/css/dataTables.bootstrap5.min.css') }}" />
+  {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> --}}
+  <link rel="stylesheet" href="{{ asset('assets/template/admin/vendor/datatables/css/table-datatable-jquery.css') }}" />
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -52,7 +54,7 @@
       right: 0;
       bottom: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      z-index: 2;
+      z-index: 9999;
       cursor: pointer;
     }
 
@@ -112,6 +114,29 @@
         transform: scale(1) translate(-50%, -50%);
       }
     }
+
+    .table{
+      font-size: 14px;
+    }
+
+    .dataTables_wrapper,
+    .table td{
+      color: #222224;
+    }
+    
+    .dataTables_wrapper .table th{
+      color: #222224;
+    }
+    
+    .dataTables_wrapper .dataTables_paginate .paginate_button{
+      font-size: 14px;
+      color: rgb(20, 33, 88);
+    }
+    .dataTables_wrapper .dataTables_paginate span .paginate_button{
+      font-size: 16px;
+      color: rgb(26, 42, 114);
+      padding: 0 5px 0 5px;
+    }
   </style>
 </head>
 
@@ -155,6 +180,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
   @include('universal_foot.toastr-foot')

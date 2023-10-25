@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\AdminUpdateRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Yajra\Datatables\Datatables;
 
 class ManageAdminController extends Controller
 {
@@ -40,18 +46,10 @@ class ManageAdminController extends Controller
 
     public function load_data(Request $request)
     {
-        dd('hahaha');
-        $data = User::when($request->search, function ($query, $request) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-            $query->where('email', 'like', '%' . $request->search . '%');
-        })
-            ->orderBy('created_at', 'desc')
-            ->paginate($request->paginate);
+        $data = User::select('id', 'name', 'email', 'active')->get();
 
-        dd($data);
-        return response()->json([
-            'data' => $data
-        ]);
+        return Datatables::of($data)->addIndexColumn()
+            ->make(true);
     }
 
     /**
@@ -70,9 +68,25 @@ class ManageAdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        //
+        $cek_email = User::where('email', $request->email)->first();
+
+        if ($cek_email != null) {
+            return response()->json(['status' => 'email_ada']);
+        }
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'active' => ($request->active != null) ? '1' : '0',
+            'password' => Hash::make($request->password),
+            'created_by' => Auth::user()->id,
+        ];
+
+        User::create($data);
+
+        return response()->json(['status' => 'success']);
     }
 
     /**
@@ -83,7 +97,6 @@ class ManageAdminController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -94,7 +107,11 @@ class ManageAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        return response()->json([
+            'status' => 'success',
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -104,9 +121,26 @@ class ManageAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminUpdateRequest $request, $id)
     {
-        //
+        $cek_email = User::where('email', $request->email)->first();
+
+        if ($cek_email != null) {
+            if ($cek_email->id != $request->id) {
+                return response()->json(['status' => 'email_ada']);
+            }
+        }
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'active' => ($request->active != null) ? '1' : '0',
+            'updated_by' => Auth::user()->id,
+        ];
+
+        User::find($request->id)->update($data);
+
+        return response()->json(['status' => 'success']);
     }
 
     /**
@@ -117,6 +151,7 @@ class ManageAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::where('id', $id)->delete();
+        return response()->json(['status' => 'success']);
     }
 }

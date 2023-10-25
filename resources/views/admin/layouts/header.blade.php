@@ -173,7 +173,40 @@
       <li class="nav-item dropdown pe-3">
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <img src="{{ asset('assets/template/admin') }}/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+          @php
+              if(Auth::user() != null){
+                $duser = 'ada';
+                if(Auth::user()->jenis_kelamin == null){
+                  $djk = null;
+                }else{
+                  if(Auth::user()->jenis_kelamin == 'l'){
+                    $djk = 'l';
+                  }else{
+                    $djk = 'p';
+                  }
+                }
+              }else{
+                $duser = 'ada';
+                if(Auth::guard('pasien')->user()->jenis_kelamin == null){
+                  $djk = null;
+                }else{
+                  if(Auth::guard('pasien')->user()->jenis_kelamin == 'l'){
+                    $djk = 'l';
+                  }else{
+                    $djk = 'p';
+                  }
+                }
+              }
+          @endphp
+          @if ($djk == null)
+            <img src="{{ asset('assets/image/profile/kosong/profile-l.jpg') }}" alt="Profile" class="rounded-circle" style="width: 35px !important;height: 35px !important;object-fit: cover;">
+          @else
+              @if ($djk == 'l')
+                <img src="{{ asset('assets/image/profile/kosong/profile-l.jpg') }}" alt="Profile" class="rounded-circle" style="width: 35px !important;height: 35px !important;object-fit: cover;">
+              @else
+                <img src="{{ asset('assets/image/profile/kosong/profile-p.jpg') }}" alt="Profile" class="rounded-circle" style="width: 35px !important;height: 35px !important;object-fit: cover;">
+              @endif
+          @endif
           <span class="d-none d-md-block dropdown-toggle ps-2">{{ (Auth::user() != null && Auth::user()->is_admin == 1)? Auth::user()->name : Auth::guard('pasien')->user()->name }}</span>
         </a><!-- End Profile Iamge Icon -->
 

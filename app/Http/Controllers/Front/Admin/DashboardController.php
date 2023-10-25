@@ -12,6 +12,18 @@ class DashboardController extends Controller
         $data = [
             'title' => 'Dashboard',
             'menu' => 'dashboard',
+            'submenu' => null,
+            'title_content' => 'Dashboard',
+            'breadcrumb' => [
+                [
+                    'title' => 'Home',
+                    'link' => route('home'),
+                ],
+                [
+                    'title' => 'Dashboard',
+                    'link' => null,
+                ]
+            ]
         ];
         return view('front.admin.dashboard.index', compact('data'));
     }

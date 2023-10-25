@@ -38,8 +38,8 @@ Route::group(['prefix' => 'A'], function () {
     Route::group(['middleware' => ['auth:web']], function () {
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
-        Route::resource('manage-admin', ManageAdminController::class);
         Route::get('manage-admin/load_data', [ManageAdminController::class, 'load_data'])->name('admin.manage-admin.load_data');
+        Route::resource('manage-admin', ManageAdminController::class);
 
         Route::get('profile', [AuthController::class, 'profile'])->name('admin.profile');
     });
