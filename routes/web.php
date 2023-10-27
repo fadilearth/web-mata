@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ManageAdminController;
+use App\Http\Controllers\Admin\ManagePasienController;
 use App\Http\Controllers\AnalisaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Front\Admin\DashboardController;
@@ -40,6 +41,9 @@ Route::group(['prefix' => 'A'], function () {
 
         Route::get('manage-admin/load_data', [ManageAdminController::class, 'load_data'])->name('admin.manage-admin.load_data');
         Route::resource('manage-admin', ManageAdminController::class);
+
+        Route::get('manage-pasien/load_data', [ManagePasienController::class, 'load_data'])->name('admin.manage-pasien.load_data');
+        Route::resource('manage-pasien', ManagePasienController::class);
 
         Route::get('profile', [AuthController::class, 'profile'])->name('admin.profile');
     });
