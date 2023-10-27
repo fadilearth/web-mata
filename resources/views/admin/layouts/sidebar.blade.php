@@ -50,7 +50,7 @@
         </a>
         <ul id="user-nav" class="nav-content {{ ($data['menu'] == 'manage-user')? '' : 'collapse' }} " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{route('manage-pasien.index')}}" class="{{ ($data['submenu'] == 'pasien')? 'active' : '' }}">
+            <a href="{{ route('manage-pasien.index') }}" class="{{ ($data['submenu'] == 'pasien')? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Data Pasien</span>
             </a>
           </li>
