@@ -103,7 +103,6 @@ class ManagePasienController extends Controller
         $data['updated_by'] = Auth::user()->id;
 
         Pasien::find($id)->update($data);
-
         return response()->json(['status' => 'success']);
     }
 

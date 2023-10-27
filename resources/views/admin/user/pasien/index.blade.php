@@ -39,7 +39,6 @@
 
 @push('scripts')
 <script>
-
     var table = '';
     $(document).ready(function(){
         // var table = $('#tbl-admin').DataTable({

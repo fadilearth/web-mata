@@ -42,6 +42,7 @@ Route::group(['prefix' => 'A'], function () {
         Route::get('manage-admin/load_data', [ManageAdminController::class, 'load_data'])->name('admin.manage-admin.load_data');
         Route::resource('manage-admin', ManageAdminController::class);
 
+        // Data Pasien
         Route::get('manage-pasien/load_data', [ManagePasienController::class, 'load_data'])->name('admin.manage-pasien.load_data');
         Route::resource('manage-pasien', ManagePasienController::class);
 
